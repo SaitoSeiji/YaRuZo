@@ -15,7 +15,7 @@ public class TodoDataPanel : MonoBehaviour,IMessageTransporter
 
     void InitData()
     {
-        var data = dataCtrl._nowSelectTodoData;
+        var data = dataCtrl._NowSelectTodoData;
         title.text = data._Text;
     }
 

@@ -7,16 +7,18 @@ public class SelfTalk : MonoBehaviour,IMessageTransporter
 {
     UIDataController _dataCtrl;
     [SerializeField] Text selfTalkText;
+    string _firstselfTalkText;
 
     private void Awake()
     {
         _dataCtrl = UIDataController.Instance;
         SetTransportParent_privete();
+        _firstselfTalkText = selfTalkText.text;
     }
 
     void SetSelfTalk()
     {
-        var replaceSt=selfTalkText.text.Replace("title", _dataCtrl._nowSelectTodoData._Text);
+        var replaceSt=_firstselfTalkText.Replace("title", _dataCtrl._NowSelectTodoData._Text);
         selfTalkText.text = replaceSt;
     }
 

@@ -64,7 +64,7 @@ public class ToDoListUI : SingletonMonoBehaviour<ToDoListUI>,IMessageTransporter
             UnityEvent onClick = new UnityEvent();
             //山椒が残ってしまう問題を解決
             int index = i;
-            onClick.AddListener(()=>_dataCtrl._nowSelectTodoData=_toDoListData._list[index]);
+            onClick.AddListener(()=>_dataCtrl._NowSelectTodoData=_toDoListData._list[index]);
             _buttonLayout.SetOnclick(onClick, i);
         }
     }
@@ -72,10 +72,10 @@ public class ToDoListUI : SingletonMonoBehaviour<ToDoListUI>,IMessageTransporter
     void RemoveSelectData()
     {
         if (!_dataCtrl._removeDataFlag) return;
-        if (_dataCtrl._nowSelectTodoData == null) return;
+        if (_dataCtrl._NowSelectTodoData == null) return;
         for(int i=_toDoListData._list.Count-1;i>=0;i--)
         {
-            if (_toDoListData._list[i].Equals(_dataCtrl._nowSelectTodoData))
+            if (_toDoListData._list[i].Equals(_dataCtrl._NowSelectTodoData))
             {
                 _toDoListData._list.RemoveAt(i);
                 _dataCtrl._removeDataFlag = false;
