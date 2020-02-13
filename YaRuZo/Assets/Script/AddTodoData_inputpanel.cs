@@ -14,7 +14,8 @@ public class AddTodoData_inputpanel : MonoBehaviour,IMessageTransporter
 
     void AddInput()
     {
-        ToDoListUI.Instance.AddData(_inputField.textComponent.text);
+        string inputText= _inputField.text;
+        ToDoListUI.Instance.AddData(inputText);
     }
 
     void ResetInput()

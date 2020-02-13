@@ -14,6 +14,7 @@ public class ToDoDoing : MonoBehaviour,IMessageTransporter
     [SerializeField] DoingState _doingState = DoingState.BEFORE;
 
     [SerializeField] Text _titleText;
+    string _firstTitleText;
     [SerializeField] Text _doingTimetext;
     [SerializeField] Text _breakTimeText;
     [SerializeField] GameObject _doingPanel;
@@ -22,24 +23,35 @@ public class ToDoDoing : MonoBehaviour,IMessageTransporter
 
     UIDataController dataCtrl;
 
-    float _doingTime;
-    float _breakTime;
+    //float _doingTime;
+    //float _breakTime;
+    RealTimeTimer _doingTimer=new RealTimeTimer();
+    RealTimeTimer _breakTimer=new RealTimeTimer();
+
 
     private void Awake()
     {
         dataCtrl = UIDataController.Instance;
         SetTransportParent_privete();
+        _firstTitleText = _titleText.text;
     }
 
     private void Update()
     {
+
+        float _doingTime=0;
+        float _breakTime=0;
         if (_doingNow)
         {
-            _doingTime += Time.deltaTime;
+            if (!_doingTimer._IsActive) _doingTimer.StartTimer();
+            if (_breakTimer._IsActive) _breakTimer.StopTimer();
         }else if (!_doingNow && _doingState == DoingState.BREAKE)
         {
-            _breakTime += Time.deltaTime;
+            if (_doingTimer._IsActive) _doingTimer.StopTimer();
+            if (!_breakTimer._IsActive) _breakTimer.StartTimer();
         }
+        _doingTime = _doingTimer.GetTimer();
+        _breakTime = _breakTimer.GetTimer();
 
         DisplayTime(_doingTime, _doingTimetext);
         DisplayTime(_breakTime, _breakTimeText);
@@ -69,12 +81,14 @@ public class ToDoDoing : MonoBehaviour,IMessageTransporter
 
     void ResetDoingTime()
     {
-        _doingTime = 0;
+        //_doingTime = 0;
+        _doingTimer.ResetTimer();
     }
 
     void ResetBreakTime()
     {
-        _breakTime = 0;
+        //_breakTime = 0;
+        _breakTimer.ResetTimer();
     }
 
     void StartDoingPanel()
@@ -91,7 +105,7 @@ public class ToDoDoing : MonoBehaviour,IMessageTransporter
 
     void SetTitleText()
     {
-        var replaceSt=_titleText.text.Replace("title", dataCtrl._nowSelectTodoData._Text);
+        var replaceSt=_firstTitleText.Replace("title", dataCtrl._NowSelectTodoData._Text);
         _titleText.text = replaceSt;
     }
     

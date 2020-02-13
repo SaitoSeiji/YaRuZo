@@ -7,17 +7,18 @@ public class DoPreparation : MonoBehaviour,IMessageTransporter
 {
     UIDataController dataCtrl;
     [SerializeField] Text _titleText;
+    string _firstTitleText;
 
     private void Awake()
     {
         dataCtrl = UIDataController.Instance;
+        _firstTitleText = _titleText.text;
         SetTransportParent_privete();
     }
 
     void SetTitle()
     {
-        string titleString = _titleText.text;
-        var replaceSt=titleString.Replace("title", dataCtrl._nowSelectTodoData._Text);
+        var replaceSt=_firstTitleText.Replace("title", dataCtrl._NowSelectTodoData._Text);
         _titleText.text = replaceSt;
     }
 
